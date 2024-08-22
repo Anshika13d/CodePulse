@@ -19,7 +19,7 @@ const saltRounds = 5;
 
 async function handleSignup(req, res) {
     
-    const {username, email, password} = req.body
+    const {username, email, password, firebaseUid} = req.body
     
     try{
         const salt = await bcrypt.genSalt(saltRounds)
@@ -28,7 +28,8 @@ async function handleSignup(req, res) {
         const userDoc = await User.create({
             username,
             email,
-            password:hashedPassword
+            password:hashedPassword,
+            firebaseUid: firebaseUid
         })
 
         res.status(201).json({userDoc});
@@ -41,7 +42,7 @@ async function handleSignup(req, res) {
 }
 
 async function handleLogin(req, res) {
-    const {username, password} = req.body;
+    const {username, password, firebaseUid} = req.body;
 
         const userDoc = await User.findOne({username});
         
@@ -49,17 +50,21 @@ async function handleLogin(req, res) {
             return res.status(400).json({ message: "No such user exists" });
         }
 
+        console.log(userDoc);
         
         const isOk = await bcrypt.compare(password, userDoc.password);
 
         if(isOk){
-            jwt.sign({username, id:userDoc._id}, secret, {}, (err, token) => {
+            const payload = { username, id: userDoc._id, firebaseUid: userDoc.firebaseUid };
+            console.log('JWT Payload:', payload);
+            jwt.sign({username, id:userDoc._id, firebaseUid: userDoc.firebaseUid}, secret, {}, (err, token) => {
                 if(err) {
                     throw err
                 }
                 res.cookie('token', token, { httpOnly: true, path: '/' }).json({
                     id:userDoc._id,
-                    username
+                    username,
+                    firebaseUid: userDoc.firebaseUid
                 })
             })
 

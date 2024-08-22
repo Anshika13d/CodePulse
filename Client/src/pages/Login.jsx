@@ -23,8 +23,16 @@ function Login() {
                 withCredentials: true
             })
 
+            const { firebaseUid } = res.data;
+
+            const userData = {
+                id: res.data.id,
+                username: res.data.username,
+                firebaseUid: res.data.firebaseUid
+            }
+
             if(res.status === 200){
-                setUser(res.data);
+                setUser(userData);
                 setLoggedIn(true);
                 toast.success("Hey champ! Welcome back!", {icon: '🚀'});
             }

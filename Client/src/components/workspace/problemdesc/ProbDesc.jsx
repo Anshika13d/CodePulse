@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { AiFillLike, AiFillDislike } from "react-icons/ai";
 import { BsCheck2Circle } from "react-icons/bs";
 import { TiStarOutline } from "react-icons/ti";
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { firestore } from '../../../firebase/firebase';
+import RectangleSkeleton from '../../skeletons/RectangleSkeleton';
+import CircleSkeleton from '../../skeletons/CircleSkeleton';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { AuthContext } from '../../../context/AuthContext';
 
-function ProbDesc({problem}) {
+
+function ProbDesc({problem, _solved}) {
+  const {currentProblem, loading, problemDifficultyClass} = useGetCurrentProblem(problem.id);
+
+  const { solved } = useGetUsersDataOnProblem(problem.id);
+
   return (
     <div className='bg-gradient-to-r from-inherit to-gray-900' >
 			{/* TAB */}
@@ -20,27 +31,50 @@ function ProbDesc({problem}) {
 						<div className='flex space-x-4'>
 							<div className='flex-1 mr-2 text-lg text-white font-medium'>{problem?.title}</div>
 						</div>
-						<div className='flex items-center mt-3'>
+						{!loading && currentProblem && (
+							<div className='flex items-center mt-3'>
 							<div
-								className={`text-green-200 bg-olive inline-block rounded-[21px] bg-opacity-[.15] px-2.5 py-1 text-xs font-medium capitalize `}
+								className={`${problemDifficultyClass} inline-block rounded-[21px] px-2.5 py-1 text-xs font-medium capitalize `}
 							>
-								Easy
+								{currentProblem.difficulty}
 							</div>
-							<div className='rounded p-[3px] ml-4 text-lg transition-colors duration-200 text-green-300 text-dark-green-s'>
+							{(solved || _solved) && (
+								<div className='rounded p-[3px] ml-4 text-lg transition-colors duration-200 text-green-300 text-dark-green-s'>
 								<BsCheck2Circle />
 							</div>
-							<div className='flex items-center cursor-pointer hover:bg-dark-fill-3 space-x-1 rounded p-[3px]  ml-4 text-lg transition-colors duration-200 text-gray-500'>
-								<AiFillLike />
-								<span className='text-xs'>120</span>
+							)}
+
+							{/* Like and dislike functionality */}
+							{/* <div 
+								className='flex items-center cursor-pointer hover:bg-dark-fill-3 space-x-1 rounded p-[3px]  ml-4 text-lg transition-colors duration-200 text-gray-500'
+								onClick={toggleLike}
+							>
+								{liked ? <AiFillLike className='text-blue-900' /> :
+								<AiFillLike />}
+								<span className='text-xs'>
+									{currentProblem.likes}
+								</span>
 							</div>
 							<div className='flex items-center cursor-pointer hover:bg-dark-fill-3 space-x-1 rounded p-[3px]  ml-4 text-lg transition-colors duration-200 text-green-s text-gray-500'>
 								<AiFillDislike />
-								<span className='text-xs'>2</span>
-							</div>
+								<span className='text-xs'>
+									{currentProblem.dislikes}
+								</span>
+							</div> 
+
 							<div className='cursor-pointer hover:bg-dark-fill-3  rounded p-[3px]  ml-4 text-xl transition-colors duration-200 text-green-s text-gray-500 '>
 								<TiStarOutline />
-							</div>
+							</div> */}
 						</div>
+						)}
+
+						{loading && (
+							<div className='mt-3 flex space-x-2'>
+								<RectangleSkeleton />
+								<CircleSkeleton />
+								
+							</div>
+						)}
 
 						{/* Problem Statement(paragraphs) */}
 						<div className='text-white text-sm'>
@@ -101,4 +135,81 @@ function ProbDesc({problem}) {
   )
 }
 
-export default ProbDesc
+export default ProbDesc;
+
+//a hook for getting the current problem
+function useGetCurrentProblem(problemId) {
+	const [currentProblem, setCurrentProblem] = useState(null);
+	const [loading, setLoading] = useState(true);
+	const [problemDifficultyClass, setProblemDifficultyClass] = useState("");
+
+  	useEffect(() => {
+		const getCurrentProblem = async () => {
+			setLoading(true);
+
+			const docRef = doc(firestore, "problems",problemId)
+			
+			const docSnap = await getDoc(docRef)
+			if(docSnap.exists()){
+				const problem = docSnap.data();
+				console.log(problem, "current problem is here");
+				setCurrentProblem({id:docSnap.id, ...problem})
+				setProblemDifficultyClass(
+					problem.difficulty == "Easy" 
+					? "text-blue-300" 
+					: problem.difficulty === "Medium" 
+					? "text-yellow-200" 
+					: "text-red-400"
+				)
+			}
+
+			setLoading(false);
+			// else{
+			// 	console.log("nothing here");
+				
+			// }
+		};
+		getCurrentProblem()
+	}, [problemId]);
+
+	return {currentProblem, loading, problemDifficultyClass, setCurrentProblem};
+}
+
+//for getting the user data on the problem and adding like and dislike functionality
+function useGetUsersDataOnProblem(problemId) {
+	const [data, setData] = useState({ solved: false });
+	const {user} = useContext(AuthContext);
+
+	console.log("Current User: ", user);
+  
+	useEffect(() => {
+
+	  const getUsersDataOnProblem = async () => {
+		const currentUser = user;
+		//console.log(user.firebaseUid);
+		
+		if (currentUser) {
+		  const userRef = doc(firestore, "users", currentUser.firebaseUid);
+		  
+		  const userSnap = await getDoc(userRef);
+
+		  console.log("User Reference: ", userRef);
+		  console.log("User Snapshot: ", userSnap);
+		  
+
+		  if (userSnap.exists()) {
+			const data = userSnap.data();
+			const { solvedProblems } = data;
+			setData({
+			  solved: solvedProblems.includes(problemId),
+			});
+		  }
+		}
+	  };
+  
+	  getUsersDataOnProblem();
+	  return () => setData({ solved: false });
+	}, [problemId, user]);
+  
+	return { ...data, setData };
+}

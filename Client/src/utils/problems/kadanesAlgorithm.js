@@ -27,7 +27,7 @@ const starterCodeMaxSubArrayJS = `function maxSubArray(nums) {
 };`;
 
 export const maxSubArray = {
-    id: "maximum-subarray",
+    id: "kadanesAlgorithm",
     title: "Maximum Subarray",
     problemStatement: `<p class='mt-3'>
         Given an integer array <code>nums</code>, find the <strong>subarray</strong> with the largest sum, and return its sum.

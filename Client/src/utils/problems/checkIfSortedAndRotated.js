@@ -26,7 +26,7 @@ const starterCodeCheckIfSortedAndRotatedJS = `function checkIfSortedAndRotated(n
 };`;
 
 export const checkIfSortedAndRotated = {
-    id: "check-if-sorted-and-rotated",
+    id: "checkIfSortedAndRotated",
     title: "Check if Array Is Sorted and Rotated",
     problemStatement: `<p class='mt-3'>
         Given an array <code>nums</code>, return <code>true</code> if the array was originally sorted in non-decreasing order, 

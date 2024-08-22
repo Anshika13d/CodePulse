@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-const starterCode = `function twoSum(nums, target) {
+const starterCodeTwoSum = `function twoSum(nums, target) {
     // Your code here
 }`;
 
@@ -25,6 +25,7 @@ const handlerTwoSum = (fn) => {
         for (let i = 0; i < nums.length; i++) {
             // result is output of user's function and is the expected output
             const result = fn(nums[i], target[i]);
+            console.log(`Test case ${i + 1}:`, { result, expected: answers[i] });
             expect(result).to.deep.equal(answers[i]);
         }
         return true;
@@ -36,7 +37,7 @@ const handlerTwoSum = (fn) => {
 };
 
 export const twoSum = {
-    id: 'two-sum',
+    id: 'twoSum',
     title: '1. Two Sum',
     problemStatement: `<p class='mt-3'>
                         Given an array of integers <code>nums</code> and an integer <code>target</code>, return
@@ -76,7 +77,7 @@ export const twoSum = {
                 </li>
             `,
     handlerFunction: handlerTwoSum,
-    starterCode: starterCode,
+    starterCode: starterCodeTwoSum,
     order: 1,
     starterFunctionName: "function twoSum(",
 };

@@ -4,6 +4,10 @@ import {motion} from 'framer-motion'
 import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast';
 import Footer from '../components/Footer/Footer';
+import { doc, setDoc } from 'firebase/firestore';
+import { firestore } from '../firebase/firebase';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
 
 function Signup() {
 
@@ -14,17 +18,51 @@ function Signup() {
 
     const signupUser = async (e) => {
         e.preventDefault();
-        try{
-            const res = await axios.post('http://localhost:4000/signup', {
-                username, email, password
+    
+        try {
+            const loadingToastId = toast.loading('Signing you up! Please wait...', { icon: '👀' });
+    
+            // Firebase Authentication Sign Up
+            const auth = getAuth();
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+    
+            // Prepare user data to store in Firestore and MongoDB
+            const userData = {
+                uid: user.uid,
+                email: user.email,
+                displayName: username,
+                createdAt: Date.now(),
+                updatedAt: Date.now(),
+                likedProblems: [],
+                dislikedProblems: [],
+                solvedProblems: [],
+                starredProblems: [],
+            };
+    
+            // Store user data in Firebase Firestore
+            await setDoc(doc(firestore, 'users', user.uid), userData);
+    
+            // Store user data in your MongoDB database via your API
+            await axios.post('http://localhost:4000/signup', {
+                username,
+                email,
+                password,
+                firebaseUid: user.uid // Send Firebase UID to MongoDB as well
             });
-            toast.success('Welcome to CodePulse!', {icon: '😍'});
+
+            
+
+            toast.dismiss(loadingToastId);
+    
+            toast.success('Welcome to CodePulse!', { icon: '😍' });
             setSign(true);
-        }
-        catch(e){
-            toast.error('Error while signing up! Please try again!', {icon: '😢'});
-        }
-    }
+        } catch (e) {
+            toast.dismiss(loadingToastId);
+            toast.error('Error while signing up! Please try again!', { icon: '😢' });
+        } 
+    };
+
 
     if(sign){
         return <Navigate to='/home' />

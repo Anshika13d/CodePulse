@@ -4,7 +4,7 @@ const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-        unique: true
+        //unique: true
     },
     email: {
         type: String,
@@ -12,7 +12,11 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    firebaseUid: {
+        type: String,
+        required: true
+    },
 })
 
 const User = mongoose.model('User', userSchema)

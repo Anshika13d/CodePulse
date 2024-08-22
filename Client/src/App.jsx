@@ -13,11 +13,20 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { AuthContext } from "./context/AuthContext";
 import CodePage from "./pages/CodePage";
 import toast, { Toaster } from 'react-hot-toast';
+import useHasMounted from "./hooks/useHasMounted";
 
 function App() {
+
+  //rehydration problem sol
+  // const hasMounted = useHasMounted();
+  // if(!hasMounted) return null;
+
+  
   const [menuOpen, setMenuOpen] = useState(false);
   const {user, setUser} = useContext(AuthContext);
   const navigate = useNavigate();
+
+  
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);

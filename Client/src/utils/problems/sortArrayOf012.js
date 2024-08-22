@@ -27,7 +27,7 @@ const starterCodeSortColorsJS = `function sortColors(nums) {
 };`;
 
 export const sortColors = {
-    id: "sort-colors",
+    id: "sortArrayOf012",
     title: "Sort an array of 0's, 1's and 2's",
     problemStatement: `<p class='mt-3'>
         Given an array <code>nums</code> with <code>n</code> objects colored red, white, or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white, and blue.

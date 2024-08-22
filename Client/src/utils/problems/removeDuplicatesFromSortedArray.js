@@ -29,7 +29,7 @@ const starterCodeRemoveDuplicatesJS = `function removeDuplicates(nums) {
 };`;
 
 export const removeDuplicates = {
-    id: "remove-duplicates-from-sorted-array",
+    id: "removeDuplicates",
     title: "Remove Duplicates from Sorted Array",
     problemStatement: `<p class='mt-3'>
         Given an integer array <code>nums</code> sorted in non-decreasing order, remove the duplicates in-place such that 
