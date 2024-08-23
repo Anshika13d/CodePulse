@@ -3,6 +3,7 @@ const {handleLogin, handleSignup, handleProfile, handleLogout} = require('./auth
 const { connectToDB } = require('./connect.js')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
+const serverless = require('serverless-http');
 
 
 const app = express()
@@ -30,3 +31,5 @@ connectToDB().then(() => {
     console.error('Failed to connect to the database:', error);
   });
   
+
+  module.exports.handler = serverless(app);
