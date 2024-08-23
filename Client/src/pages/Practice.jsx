@@ -8,6 +8,7 @@ import { AuthContext } from '../context/AuthContext';
 import robot from '../assets/robot.png'
 import Footer from '../components/Footer/Footer';
 import HourglassTopOutlinedIcon from '@mui/icons-material/HourglassTopOutlined';
+import welcome from '../assets/welcome.png';
 
 //import all leveles
 import {level5_probs} from '../utils/level5_probs/index.js';
@@ -122,8 +123,19 @@ function Practice() {
 
   return (
     <>
+    
     <div className='min-h-screen bg-gradient-to-r from-gray-800 to-black flex flex-col items-center justify-center mb-10'>
+    
+      
       <p className='text-white mt-7 text-4xl text-center  mb-8'>Unlock Each Level of Your Success!</p>
+
+      <div>
+      <Link to='/read'>
+        <button className='transition-all duration-300 ease-in-out hover:shadow-glow-purple rounded-2xl h-10 py-2 px-4 w-60 text-white bg-gradient-to-r from-gray-800 to-black'>
+          Read Instructions
+        </button>
+        </Link>
+      </div>
 
       <div className='container w-1/2 items-start  mb-14 mt-9'>
         <Link to={`/level/${problems.id}`}>   
@@ -207,12 +219,14 @@ function Practice() {
         }
       </div> */}
     </div>
+    
 
       <Routes>
         <Route path="/level" element={<Level />} />
       </Routes>
 
       <Footer />
+
 </>
   );
 }

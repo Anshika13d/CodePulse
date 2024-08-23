@@ -14,6 +14,7 @@ import { AuthContext } from "./context/AuthContext";
 import CodePage from "./pages/CodePage";
 import toast, { Toaster } from 'react-hot-toast';
 import useHasMounted from "./hooks/useHasMounted";
+import Read from "./pages/Read";
 
 function App() {
 
@@ -86,7 +87,7 @@ function App() {
             </button>
           </div>) : (<>
                     <div className="flex items-center space-x-4 md:space-x-2" >
-                    <AccountCircleIcon className="h-10 w-10 md:h-8 md:w-8"/>
+                    
                     <button 
                       className=" p-1 border-none rounded-lg w-24 bg-gray-900 border-2 border-gray-800 hover:bg-gray-800 text-white "
                       onClick={logout}
@@ -142,6 +143,7 @@ function App() {
         <Route path="/level/:id" element={<Level />} />
         {/* <Route path="/code" element={<CodePage />} /> */}
         <Route path="/code/:pid" element={<CodePage />} />
+        <Route path="/read" element={<Read/>}/>
       </Routes>
 
 

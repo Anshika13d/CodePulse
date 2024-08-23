@@ -9,11 +9,13 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer/Footer';
+import home from '../assets/home.png';
 
 function Home() {
   return (
     <div className='bg-gradient-to-r from-gray-800 to-black'>
       <div className='flex flex-col items-center justify-center min-h-screen p-4  '>
+        <img src={home} className='w-36' alt="" />
         <div className='mb-8 text-center'>
           <TypeAnimation
             className='text-white text-3xl md:text-5xl'
@@ -26,9 +28,11 @@ function Home() {
             repeat={Infinity}
           />
         </div>
-        <button className='transition-all duration-300 ease-in-out hover:shadow-glow-purple rounded-2xl h-12 py-2 px-4 w-60 text-white bg-zinc-500'>
+        <Link to='/practice'>
+        <button className='transition-all duration-300 ease-in-out hover:shadow-glow-purple rounded-2xl h-14 py-2 px-4 w-60 text-white bg-gradient-to-r from-gray-700 to-gray-800 border-2 border-gray-800'>
           Start Your Journey Now!
         </button>
+        </Link>
       </div>
 
       <div className='flex items-center justify-center'>
@@ -102,13 +106,18 @@ function Home() {
           <div >
             <h1 className='text-white font-bold text-3xl text-center mb-16'>Get Started!</h1>
           </div>
+          
           <div className="hidden justify-center mb-40 md:flex space-x-28">
-            <button className="hover:bg-zinc-400 p-1  border-none rounded-lg w-56 h-16 bg-gradient-to-r from-gray-700 to-gray-800 border-2 border-gray-800 text-white text-center">
-              <Link to='/signup'>Signup</Link>
+          <Link to='/signup'>
+            <button className="transition-all duration-300 ease-in-out hover:shadow-glow-purple  border-none rounded-lg w-56 h-16 bg-gradient-to-r from-gray-700 to-gray-800 border-2 border-gray-800 text-white text-center">
+              Signup
             </button>
-            <button className="hover:bg-zinc-400 p-1  border-none rounded-lg w-56 bg-gradient-to-r from-gray-700 to-gray-800 border-2 border-gray-800 text-white ">
-              <Link to='/login'>Login</Link>
+            </Link>
+            <Link to='/login'>
+            <button className="transition-all duration-300 ease-in-out hover:shadow-glow-purple  border-none rounded-lg w-56 h-16 bg-gradient-to-r from-gray-700 to-gray-800 border-2 border-gray-800 text-white ">
+              Login
             </button>
+            </Link>
             </div>
         </div>
 

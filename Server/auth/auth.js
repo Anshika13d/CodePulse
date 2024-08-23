@@ -30,9 +30,17 @@ async function handleSignup(req, res) {
             email,
             password:hashedPassword,
             firebaseUid: firebaseUid
-        })
+        });
 
-        res.status(201).json({userDoc});
+        const payload = { username, id: userDoc._id, firebaseUid: userDoc.firebaseUid };
+        jwt.sign(payload, secret, {}, (err, token) => {
+            if (err) {
+                return res.status(500).json({ message: 'Error signing token', err });
+            }
+            res.cookie('token', token, { httpOnly: true, path: '/' })
+               .status(201)
+               .json({ id: userDoc._id, username, firebaseUid: userDoc.firebaseUid });
+        });
     }
     
     catch(e){
@@ -56,7 +64,6 @@ async function handleLogin(req, res) {
 
         if(isOk){
             const payload = { username, id: userDoc._id, firebaseUid: userDoc.firebaseUid };
-            console.log('JWT Payload:', payload);
             jwt.sign({username, id:userDoc._id, firebaseUid: userDoc.firebaseUid}, secret, {}, (err, token) => {
                 if(err) {
                     throw err
