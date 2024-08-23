@@ -14,7 +14,7 @@ app.use(cors({
     credentials: true
 }));
 
-const secret = "abcdefghijklmnop";
+const secret = process.env.JWT_SECRET;
 const saltRounds = 5;
 
 async function handleSignup(req, res) {
