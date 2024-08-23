@@ -10,7 +10,8 @@ app.use(cookieParser())
 app.use(express.json());
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: ['https://code-pulse-a3p1.vercel.app'],
+    methods: ['GET', 'POST'],
     credentials: true
 }))
 
