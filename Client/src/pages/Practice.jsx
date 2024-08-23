@@ -170,14 +170,14 @@ function Practice() {
         
       </div>
 
-      <div className='container w-1/2  items-start  mb-14 mt-9'>
+      {/* <div className='container w-1/2  items-start  mb-14 mt-9'>
       {surprise? <LockedBtn className="w-full rounded-lg text-white font-bold"/> :
                               <button className='bg-gradient-to-r from-gray-700 to-gray-800 h-16 w-full transition-all duration-300 ease-in-out hover:shadow-glow-purple rounded-lg text-white font-bold'>
                                 Congratulations You have Unlocked the Surprise Level!!!
                               </button>
       }
         
-      </div>
+      </div> */}
 
       {/* <div className='container w-1/2  flex justify-end  mb-14'>
         {lock? 
