@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import probs from '../components/problems/problems.js';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import YouTube from 'react-youtube';
@@ -27,6 +27,10 @@ function Level() {
       </div>
     );
   };
+
+
+  //id from the url
+  const {id} = useParams();
   
 
   const[loading, setLoading] = useState(false);
@@ -37,7 +41,7 @@ function Level() {
   });
 
   const solvedProblems = useSolvedProblems();
-  console.log(solvedProblems);
+  //console.log(solvedProblems);
   
   
   // const [inputs, setInputs] = useState({
@@ -51,27 +55,32 @@ function Level() {
   //   dislikes: 0,
   // })
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    setInputs({ 
-      ...inputs, 
-      [e.target.name]: e.target.value });
-  }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleChange = (e) => {
+  //   e.preventDefault();
+  //   setInputs({ 
+  //     ...inputs, 
+  //     [e.target.name]: e.target.value });
+  // }
 
-    //convert inputs.order to integer
-    const newProblem = {
-      ...inputs,
-      order: parseInt(inputs.order)
-    }
-    await setDoc(doc(firestore, "level2_problems", inputs.id), newProblem);
-    alert("save to db")
-  }  
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   //convert inputs.order to integer
+  //   const newProblem = {
+  //     ...inputs,
+  //     order: parseInt(inputs.order)
+  //   }
+  //   await setDoc(doc(firestore, "main_problems", inputs.id), newProblem);
+  //   alert("save to db")
+  // }  
 
   //fetch problems from firebase
   const problems = useGetProblems(setLoading);
+  const problems2 = useGetProblems2(setLoading);
+  const problems3 = useGetProblems3(setLoading);
+  const problems4 = useGetProblems4(setLoading);
+  const problems5 = useGetProblems5(setLoading);
 
   return (
     <>
@@ -96,28 +105,23 @@ function Level() {
   </div>
 ) : (
   <>
-    {problems.map((problem) => (
+  {id === 'level1' ? (
+    problems.map((problem) => (
       <div key={problem.id} className='flex justify-between border-b border-slate-600 py-2 px-4 hover:bg-gray-700 rounded-md'>
         <Link to={`/code/${problem.id}`} className='w-1/2 text-white'>{problem.title}</Link>
-        <div className='w-1/4  flex flex-col items-end text-right '>
+        <div className='w-1/4  flex flex-col items-end text-right'>
           {solvedProblems.includes(problem.id) ? (
-            
-              <CheckCircleOutlineOutlinedIcon className='text-green-500 w-12' />
-            
+            <CheckCircleOutlineOutlinedIcon className='text-green-500 w-12' />
           ) : (
-            
-            <DoNotDisturbAltOutlinedIcon className='text-red-800 w-12'/>
-            
-          )
-          }
-          </div>
-        
+            <DoNotDisturbAltOutlinedIcon className='text-red-800 w-12' />
+          )}
+        </div>
         <div className='w-1/4 text-center text-white'>
           {problem.videoId ? (
             <div>
-              <YouTubeIcon 
+              <YouTubeIcon
                 className='h-7 cursor-pointer'
-                onClick={() => setYoutubePlayer({ isOpen: true, videoId: problem.videoId })}  
+                onClick={() => setYoutubePlayer({ isOpen: true, videoId: problem.videoId })}
               />
             </div>
           ) : (
@@ -125,8 +129,112 @@ function Level() {
           )}
         </div>
       </div>
-    ))}
-  </>
+    ))
+  ) : id === 'level2' ? (
+    problems2.map((problem) => (
+      <div key={problem.id} className='flex justify-between border-b border-slate-600 py-2 px-4 hover:bg-gray-700 rounded-md'>
+        <Link to={`/code/${problem.id}`} className='w-1/2 text-white'>{problem.title}</Link>
+        <div className='w-1/4  flex flex-col items-end text-right'>
+          {solvedProblems.includes(problem.id) ? (
+            <CheckCircleOutlineOutlinedIcon className='text-green-500 w-12' />
+          ) : (
+            <DoNotDisturbAltOutlinedIcon className='text-red-800 w-12' />
+          )}
+        </div>
+        <div className='w-1/4 text-center text-white'>
+          {problem.videoId ? (
+            <div>
+              <YouTubeIcon
+                className='h-7 cursor-pointer'
+                onClick={() => setYoutubePlayer({ isOpen: true, videoId: problem.videoId })}
+              />
+            </div>
+          ) : (
+            <p>Coming soon...</p>
+          )}
+        </div>
+      </div>
+    ))
+  ) : id === 'level3' ? (
+    problems3.map((problem) => (
+      <div key={problem.id} className='flex justify-between border-b border-slate-600 py-2 px-4 hover:bg-gray-700 rounded-md'>
+        <Link to={`/code/${problem.id}`} className='w-1/2 text-white'>{problem.title}</Link>
+        <div className='w-1/4  flex flex-col items-end text-right'>
+          {solvedProblems.includes(problem.id) ? (
+            <CheckCircleOutlineOutlinedIcon className='text-green-500 w-12' />
+          ) : (
+            <DoNotDisturbAltOutlinedIcon className='text-red-800 w-12' />
+          )}
+        </div>
+        <div className='w-1/4 text-center text-white'>
+          {problem.videoId ? (
+            <div>
+              <YouTubeIcon
+                className='h-7 cursor-pointer'
+                onClick={() => setYoutubePlayer({ isOpen: true, videoId: problem.videoId })}
+              />
+            </div>
+          ) : (
+            <p>Coming soon...</p>
+          )}
+        </div>
+      </div>
+    ))
+  ) : id === 'level4' ? (
+    problems4.map((problem) => (
+      <div key={problem.id} className='flex justify-between border-b border-slate-600 py-2 px-4 hover:bg-gray-700 rounded-md'>
+        <Link to={`/code/${problem.id}`} className='w-1/2 text-white'>{problem.title}</Link>
+        <div className='w-1/4  flex flex-col items-end text-right'>
+          {solvedProblems.includes(problem.id) ? (
+            <CheckCircleOutlineOutlinedIcon className='text-green-500 w-12' />
+          ) : (
+            <DoNotDisturbAltOutlinedIcon className='text-red-800 w-12' />
+          )}
+        </div>
+        <div className='w-1/4 text-center text-white'>
+          {problem.videoId ? (
+            <div>
+              <YouTubeIcon
+                className='h-7 cursor-pointer'
+                onClick={() => setYoutubePlayer({ isOpen: true, videoId: problem.videoId })}
+              />
+            </div>
+          ) : (
+            <p>Coming soon...</p>
+          )}
+        </div>
+      </div>
+    ))
+  ): 
+  (
+    problems5.map((problem) => (
+      <div key={problem.id} className='flex justify-between border-b border-slate-600 py-2 px-4 hover:bg-gray-700 rounded-md'>
+        <Link to={`/code/${problem.id}`} className='w-1/2 text-white'>{problem.title}</Link>
+        <div className='w-1/4  flex flex-col items-end text-right'>
+          {solvedProblems.includes(problem.id) ? (
+            <CheckCircleOutlineOutlinedIcon className='text-green-500 w-12' />
+          ) : (
+            <DoNotDisturbAltOutlinedIcon className='text-red-800 w-12' />
+          )}
+        </div>
+        <div className='w-1/4 text-center text-white'>
+          {problem.videoId ? (
+            <div>
+              <YouTubeIcon
+                className='h-7 cursor-pointer'
+                onClick={() => setYoutubePlayer({ isOpen: true, videoId: problem.videoId })}
+              />
+            </div>
+          ) : (
+            <p>Coming soon...</p>
+          )}
+        </div>
+      </div>
+    ))
+  )
+  }
+</>
+
 )}
 
             
@@ -155,16 +263,16 @@ function Level() {
       )}
 
       {/* temp form */}
-      <form className='p-6 flex flex-col max-w-sm gap-3' onSubmit={handleSubmit}>
+      {/* <form className='p-6 flex flex-col max-w-sm gap-3' onSubmit={handleSubmit}>
         <input onChange={handleChange} type="text" placeholder='problem id' name='id' />
         <input onChange={handleChange} type="text" placeholder='title' name='title' />
         <input onChange={handleChange} type="text" placeholder='difficulty' name='difficulty' />
-        {/* <input onChange={handleChange} type="text" placeholder='category' name='category' /> */}
+        {/* <input onChange={handleChange} type="text" placeholder='category' name='category' /> 
         <input onChange={handleChange} type="text" placeholder='order' name='order' />
         <input onChange={handleChange} type="text" placeholder='videoId?' name='videoId' />
         <input onChange={handleChange} type="text" placeholder='link' name='link' />
         <button type='submit' className='bg-white'>save to db</button>
-      </form>
+      </form> */}
       
 <Footer />
       
@@ -194,19 +302,108 @@ function useGetProblems(setLoading) {
   return problems;
 }
 
+function useGetProblems2(setLoading) {
+  const [problems, setProblems] = useState([]);
+
+  useEffect(() => {
+    const getProblems = async () => {
+      setLoading(true);
+      const q = query(collection(firestore, "level2_problems"), orderBy("order", "asc"));
+      const querySnapshot = await getDocs(q);
+      const tmp = [];
+      querySnapshot.forEach((doc) => {
+        tmp.push({ id: doc.id, ...doc.data() });
+      });
+      setProblems(tmp);
+      setLoading(false);
+    };
+
+    getProblems();
+  }, [setLoading]);
+
+  return problems;
+}
+
+function useGetProblems3(setLoading) {
+  const [problems, setProblems] = useState([]);
+
+  useEffect(() => {
+    const getProblems = async () => {
+      setLoading(true);
+      const q = query(collection(firestore, "level3_problems"), orderBy("order", "asc"));
+      const querySnapshot = await getDocs(q);
+      const tmp = [];
+      querySnapshot.forEach((doc) => {
+        tmp.push({ id: doc.id, ...doc.data() });
+      });
+      setProblems(tmp);
+      setLoading(false);
+    };
+
+    getProblems();
+  }, [setLoading]);
+
+  return problems;
+}
+
+function useGetProblems4(setLoading) {
+  const [problems, setProblems] = useState([]);
+
+  useEffect(() => {
+    const getProblems = async () => {
+      setLoading(true);
+      const q = query(collection(firestore, "level4_problems"), orderBy("order", "asc"));
+      const querySnapshot = await getDocs(q);
+      const tmp = [];
+      querySnapshot.forEach((doc) => {
+        tmp.push({ id: doc.id, ...doc.data() });
+      });
+      setProblems(tmp);
+      setLoading(false);
+    };
+
+    getProblems();
+  }, [setLoading]);
+
+  return problems;
+}
+
+function useGetProblems5(setLoading) {
+  const [problems, setProblems] = useState([]);
+
+  useEffect(() => {
+    const getProblems = async () => {
+      setLoading(true);
+      const q = query(collection(firestore, "level5_problems"), orderBy("order", "asc"));
+      const querySnapshot = await getDocs(q);
+      const tmp = [];
+      querySnapshot.forEach((doc) => {
+        tmp.push({ id: doc.id, ...doc.data() });
+      });
+      setProblems(tmp);
+      setLoading(false);
+    };
+
+    getProblems();
+  }, [setLoading]);
+
+  return problems;
+}
+
+
 export default Level;
 
 function useSolvedProblems() {
 
   const[ solvedProblems, setSolvedProblems ] = useState([]);
-  const {user} = useContext(AuthContext)
+  const {user} = useContext(AuthContext)  
 
   useEffect(() => {
     const getSolvedProblems = async () => {
       const userRef = doc(firestore, "users", user.firebaseUid);
 
       const userDoc = await getDoc(userRef);
-
+      
       if(userDoc.exists()){
         setSolvedProblems(userDoc.data().solvedProblems);
       }

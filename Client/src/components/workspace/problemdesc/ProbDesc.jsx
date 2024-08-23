@@ -144,15 +144,19 @@ function useGetCurrentProblem(problemId) {
 	const [problemDifficultyClass, setProblemDifficultyClass] = useState("");
 
   	useEffect(() => {
+		console.log("problemId: ", problemId);
+		
 		const getCurrentProblem = async () => {
 			setLoading(true);
 
-			const docRef = doc(firestore, "problems",problemId)
+			const docRef = doc(firestore, "main_problems",problemId)
+			
 			
 			const docSnap = await getDoc(docRef)
+			console.log(docSnap.exists());
+			
 			if(docSnap.exists()){
 				const problem = docSnap.data();
-				console.log(problem, "current problem is here");
 				setCurrentProblem({id:docSnap.id, ...problem})
 				setProblemDifficultyClass(
 					problem.difficulty == "Easy" 
@@ -171,7 +175,7 @@ function useGetCurrentProblem(problemId) {
 		};
 		getCurrentProblem()
 	}, [problemId]);
-
+	
 	return {currentProblem, loading, problemDifficultyClass, setCurrentProblem};
 }
 
@@ -179,8 +183,6 @@ function useGetCurrentProblem(problemId) {
 function useGetUsersDataOnProblem(problemId) {
 	const [data, setData] = useState({ solved: false });
 	const {user} = useContext(AuthContext);
-
-	console.log("Current User: ", user);
   
 	useEffect(() => {
 
@@ -192,9 +194,6 @@ function useGetUsersDataOnProblem(problemId) {
 		  const userRef = doc(firestore, "users", currentUser.firebaseUid);
 		  
 		  const userSnap = await getDoc(userRef);
-
-		  console.log("User Reference: ", userRef);
-		  console.log("User Snapshot: ", userSnap);
 		  
 
 		  if (userSnap.exists()) {

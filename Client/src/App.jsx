@@ -135,11 +135,11 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About/>} />
-        <Route path="/practice/*" element={<Practice/>} />
+        <Route path="/practice/" element={<Practice/>} />
         <Route path="/contactus" element={<ContactUs/>} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/level" element={<Level />} />
+        <Route path="/level/:id" element={<Level />} />
         {/* <Route path="/code" element={<CodePage />} /> */}
         <Route path="/code/:pid" element={<CodePage />} />
       </Routes>

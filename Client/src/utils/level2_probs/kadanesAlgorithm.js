@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-export const maxSubArrayHandler = (fn) => {
+const maxSubArrayHandler = (fn) => {
     try {
         const tests = [
             { nums: [-2, 1, -3, 4, -1, 2, 1, -5, 4], expectedSum: 6 },
@@ -58,5 +58,8 @@ export const maxSubArray = {
     starterCode: starterCodeMaxSubArrayJS,
     handlerFunction: maxSubArrayHandler,
     starterFunctionName: "function maxSubArray(",
-    order: 4,
+    order: 1,
 };
+
+
+

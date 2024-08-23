@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import {problems} from '../../../../utils/problems'
 import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
 import { firestore } from '../../../../firebase/firebase';
+import { main_problems } from '../../../../utils/main_problem';
 
 function PrefNav({ problem, setSuccess, userCode, setSolved }) {
   const {user} = useContext(AuthContext);
@@ -30,7 +31,7 @@ function PrefNav({ problem, setSuccess, userCode, setSolved }) {
         //console.log(userCode);
         
         
-        const sucess = problems[pid].handlerFunction(cb);
+        const sucess = main_problems[pid].handlerFunction(cb);
 
         if(sucess) {
           toast.success("Yay! you passes all the test cases", { icon:"🥳🙌" , position:"top-center" , autoClose: 7000 });
