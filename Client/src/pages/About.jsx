@@ -27,12 +27,16 @@ Start your journey with CodePulse today and discover a new way to learn, grow, a
       <div className='mt-20'>
 
           <div className="hidden justify-center mb-40 md:flex space-x-28">
+          <Link to='/practice'>
             <button className="transition-all duration-300 ease-in-out hover:shadow-glow-purple  border-none rounded-lg w-56 h-16 bg-gradient-to-r from-gray-700 to-gray-800 border-2 border-gray-800 text-white text-center">
-              <Link to='/practice'>Get Started!</Link>
+              Get Started!
             </button>
-            <button className="transition-all duration-300 ease-in-out hover:shadow-glow-purple  border-none rounded-lg w-56 bg-gradient-to-r from-gray-700 to-gray-800 border-2 border-gray-800 text-white ">
-              <Link to='/signup'>Learn more</Link>
+            </Link>
+            <Link to='/signup'>
+            <button className="transition-all duration-300 ease-in-out hover:shadow-glow-purple  border-none rounded-lg w-56 h-16 bg-gradient-to-r from-gray-700 to-gray-800 border-2 border-gray-800 text-white ">
+              Learn more
             </button>
+            </Link>
             </div>
         </div>
 

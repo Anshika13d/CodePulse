@@ -11,7 +11,7 @@ app.use(cookieParser())
 app.use(express.json());
 
 app.use(cors({
-    origin: ['https://code-pulse-a3p1.vercel.app'],
+    origin: 'http://localhost:5173',
     methods: ['GET', 'POST'],
     credentials: true
 }))
@@ -23,7 +23,7 @@ app.post('/logout', handleLogout);
 
 connectToDB().then(() => {
     // Start the server only if the database connection is successful
-    const PORT = process.env.PORT || 4000;
+    const PORT = 4000;
     app.listen(PORT, () => {
       console.log(`Server started on port ${PORT}`);
     });

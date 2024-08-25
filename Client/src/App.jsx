@@ -15,6 +15,7 @@ import CodePage from "./pages/CodePage";
 import toast, { Toaster } from 'react-hot-toast';
 import useHasMounted from "./hooks/useHasMounted";
 import Read from "./pages/Read";
+import ShowCertificate from "./pages/ShowCertificate";
 
 function App() {
 
@@ -79,12 +80,16 @@ function App() {
           </div>
           {!user ? (
             <div className="hidden  md:flex space-x-4">
+              <Link to='/signup'>
             <button className=" p-1  border-none rounded-lg w-24 bg-gray-900 border-2 border-gray-800 hover:bg-gray-800 text-white text-center ">
-              <Link to='/signup'>Signup</Link>
+              Signup
             </button>
+            </Link>
+            <Link to='/login'>
             <button className=" p-1  border-none rounded-lg w-24 bg-gray-900 border-2 border-gray-800 hover:bg-gray-800 text-white ">
-              <Link to='/login'>Login</Link>
+              Login
             </button>
+            </Link>
           </div>) : (<>
                     <div className="flex items-center space-x-4 md:space-x-2" >
                     
@@ -144,6 +149,7 @@ function App() {
         {/* <Route path="/code" element={<CodePage />} /> */}
         <Route path="/code/:pid" element={<CodePage />} />
         <Route path="/read" element={<Read/>}/>
+        <Route path="/certificate" element={<ShowCertificate/>}/>
       </Routes>
 
 

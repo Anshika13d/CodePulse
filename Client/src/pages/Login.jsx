@@ -22,6 +22,8 @@ function Login() {
             }, {
                 withCredentials: true
             })
+            console.log(res.data);
+            
 
             const { firebaseUid } = res.data;
 

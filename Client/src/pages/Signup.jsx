@@ -19,9 +19,9 @@ function Signup() {
     const signupUser = async (e) => {
         e.preventDefault();
     
-        try {
-            const loadingToastId = toast.loading('Signing you up! Please wait...', { icon: '👀' });
+        const loadingToastId = toast.loading('Signing you up! Please wait...');
     
+        try {
             // Firebase Authentication Sign Up
             const auth = getAuth();
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -50,19 +50,15 @@ function Signup() {
                 password,
                 firebaseUid: user.uid // Send Firebase UID to MongoDB as well
             });
-
-            
-
-            toast.dismiss(loadingToastId);
     
             toast.success('Welcome to CodePulse!', { icon: '😍' });
             setSign(true);
         } catch (e) {
-            toast.dismiss(loadingToastId);
             toast.error('Error while signing up! Please try again!', { icon: '😢' });
-        } 
+        } finally {
+            toast.dismiss(loadingToastId);
+        }
     };
-
 
     if(sign){
         return <Navigate to='/home' />

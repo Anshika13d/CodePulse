@@ -1,4 +1,5 @@
 const express = require('express')
+const env = require('dotenv')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser')
@@ -6,11 +7,12 @@ const User = require('../model/user.js');
 const cors = require('cors')
 
 const app = express()
+env.config()
 app.use(cookieParser())
 app.use(express.json())
 
 app.use(cors({
-    origin: 'https://code-pulse-a3p1.vercel.app/',
+    origin: 'http://localhost:5173',
     credentials: true
 }));
 
@@ -32,15 +34,8 @@ async function handleSignup(req, res) {
             firebaseUid: firebaseUid
         });
 
-        const payload = { username, id: userDoc._id, firebaseUid: userDoc.firebaseUid };
-        jwt.sign(payload, secret, {}, (err, token) => {
-            if (err) {
-                return res.status(500).json({ message: 'Error signing token', err });
-            }
-            res.cookie('token', token, { httpOnly: true, path: '/' })
-               .status(201)
-               .json({ id: userDoc._id, username, firebaseUid: userDoc.firebaseUid });
-        });
+        res.json(userDoc)
+        
     }
     
     catch(e){

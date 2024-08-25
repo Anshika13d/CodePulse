@@ -18,6 +18,7 @@ import {level2_probs} from '../utils/level2_probs/index.js';
 import { problems } from '../utils/problems/index.js';
 import { collection, doc, getDoc, getDocs, orderBy, query } from 'firebase/firestore';
 import { firestore } from '../firebase/firebase.js';
+import ShowCertificate from './ShowCertificate.jsx';
 
 
 //to fetch the solved problems of the user
@@ -60,6 +61,15 @@ function Practice() {
   const {setUser, user} = useContext(AuthContext);
   const [surprise, setSurprise] = useState(true);
   const solvedProblems = useSolvedProblems();
+  const [certVisible, setCertVisible] = useState(false);
+
+  const handleCongrats = () => {
+    setCertVisible(true);
+  }
+
+  const handleCloseCert = () => {
+    setCertVisible(false);
+  };
 
 
   useEffect(() => {
@@ -77,6 +87,9 @@ function Practice() {
   
         const unlockLevel5 = await checkIfLevelIsUnlocked(level4_probs, user.firebaseUid);
         setLock5(!unlockLevel5);
+
+        const surpriseLevel = await checkIfLevelIsUnlocked(level5_probs, user.firebaseUid);
+        setSurprise(!surpriseLevel);
       }
       setLoading(false);
     };
@@ -182,14 +195,35 @@ function Practice() {
         
       </div>
 
-      {/* <div className='container w-1/2  items-start  mb-14 mt-9'>
-      {surprise? <LockedBtn className="w-full rounded-lg text-white font-bold"/> :
-                              <button className='bg-gradient-to-r from-gray-700 to-gray-800 h-16 w-full transition-all duration-300 ease-in-out hover:shadow-glow-purple rounded-lg text-white font-bold'>
-                                Congratulations You have Unlocked the Surprise Level!!!
-                              </button>
+      <div className='container w-1/2  items-start  mb-14 mt-9'>
+      {surprise? 
+          <div className="relative inline-block h-12 w-full"> 
+          <button 
+              className='relative bg-gradient-to-r from-gray-700 to-gray-800 h-full w-full overflow-hidden blur-sm rounded-lg text-white font-bold'
+              
+              >
+              <p 
+                  className='z-10 flex justify-center items-center h-full text-white font-bold relative'> 
+                  Congratulations! You have Unlocked the Surprise Level!
+              </p>
+          </button>
+          <div className="absolute inset-0 flex justify-center items-center">
+          <LockIcon className="z-20 text-white" />
+        </div>
+      </div>
+                      :
+                      <>
+              <button
+                className='bg-gradient-to-r from-gray-700 to-gray-800 h-16 w-full transition-all duration-300 ease-in-out hover:shadow-glow-purple rounded-lg text-white font-bold'
+                onClick={handleCongrats}>
+                Congratulations You have Unlocked Your Reward!!! 🥳🙌
+              </button>
+
+              {certVisible && <ShowCertificate onClose={handleCloseCert} />}
+            </>
       }
         
-      </div> */}
+      </div>
 
       {/* <div className='container w-1/2  flex justify-end  mb-14'>
         {lock? 
