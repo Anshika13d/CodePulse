@@ -5,14 +5,13 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const serverless = require('serverless-http');
 
-
 const app = express()
 app.use(cookieParser())
 app.use(express.json());
 
 app.use(cors({
     origin: 'http://localhost:5173',
-    methods: ['GET', 'POST'],
+    // methods: ['GET', 'POST'],
     credentials: true
 }))
 

@@ -21,8 +21,10 @@ const saltRounds = 5;
 
 async function handleSignup(req, res) {
     
-    const {username, email, password, firebaseUid} = req.body
-    
+    const {username, email, password, firebaseUid} = req.body;
+    console.log('Headers:', req.headers);
+    console.log('Body:', req.body);
+
     try{
         const salt = await bcrypt.genSalt(saltRounds)
         const hashedPassword = await bcrypt.hash(password, salt)
@@ -35,7 +37,6 @@ async function handleSignup(req, res) {
         });
 
         res.json(userDoc)
-        
     }
     
     catch(e){

@@ -36,7 +36,35 @@ const probs = [
     difficulty: "Medium",
     order: 5,
     videoId: "tp8JIuCXBaU"
-  }
+  },
+  {
+    id: "firstBadVersion",
+    title: "First Bad Version",
+    difficulty: "Easy",
+    order: 6,
+    videoId: "vnfGi-ucwTE"
+  },
+  {
+    id: "palindromeNumber",
+    title: "Palindrome Number",
+    difficulty: "Easy",
+    order: 9,
+    videoId: "yubRKwixN-U"
+  },
+  {
+    id: "searchInsert",
+    title: "Search Insert Position",
+    difficulty: "Easy",
+    order: 7,
+    videoId: "K-RYzDZkzCI"
+  },
+  {
+    id: "summaryRanges",
+    title: "Summary Ranges",
+    difficulty: "Medium",
+    order: 8,
+    videoId: "PyYZCJRAMmY"
+  },
 ]
 
 export default probs;
